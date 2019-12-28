@@ -11,7 +11,7 @@ class ProfilesController extends Controller
     public function index($userId)
     {
         // Obtenim usuari a través de la ID
-        $user = User::find($userId);
+        $user = User::findOrFail($userId);
 
         // Cridem a la vista, passant-li array de variables
         return view('home', [
