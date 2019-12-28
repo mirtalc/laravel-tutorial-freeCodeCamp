@@ -21,7 +21,8 @@ class CreateProfilesTable extends Migration
             $table->string('url')->nullable();
             $table->timestamps();
 
-            // Per motius de rapidesa de consulta
+            // Per motius de rapidesa de consulta ...
+            // ... creem índex en totes les columnes de FK
             $table->index('user_id');
         });
     }
