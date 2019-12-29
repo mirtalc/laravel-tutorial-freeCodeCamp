@@ -14,7 +14,7 @@ class ProfilesController extends Controller
         $user = User::findOrFail($userId);
 
         // Cridem a la vista, passant-li array de variables
-        return view('home', [
+        return view('profiles/index', [
             'user' => $user,
         ]);
     }
