@@ -17,8 +17,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// ------ PostsController ------
 Route::get('/p/create', 'PostsController@create');
+Route::get('/p/{post}', 'PostsController@show');
 
 Route::post('/p', 'PostsController@store');
 
+// ------ ProfilesController ------
 Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
