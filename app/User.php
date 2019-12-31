@@ -38,6 +38,23 @@ class User extends Authenticatable
     ];
 
     /**
+     * Funció que s'activa cada volta que es crea un usuari.
+     * Volem que automàticament, se li cree un perfil associat.
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            $user->profile()->create([
+                // el $user_id el crea per defecte, perquè hem creat el perfil desde la relació
+                // el title és nullable, però posem algo per defecte
+                'title' => $user->username,
+            ]);
+        });
+    }
+
+    /**
      * Relació amb Post
      */
     public function posts()
