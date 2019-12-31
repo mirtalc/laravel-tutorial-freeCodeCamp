@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class ProfilesController extends Controller
 {
@@ -21,18 +22,31 @@ class ProfilesController extends Controller
 
     public function update(User $user)
     {
+        // 1. Comprovem que l'operació està autoritzada
         $this->authorize('update', $user->profile);
 
+        // 2. Validem dades del formulari i les guardem a $data
         $data = request()->validate([
             'title' => 'required',
             'description' => 'required',
             'url' => 'url',
-            'image' => '',
+            'image' => '', //required no, però igual estaria bé posar image
         ]);
 
-        // En compte de fiar-nos de l'usuari per paràmetre, modifiquem el loguejat
-        // Si no, conforme està ara, qualsevol podria editar altres perfils.
-        auth()->user()->profile->update($data);
+        // 3. Si l'usuari ha pujat una imatge, la guardem redimensionada
+        if (request('image')) {
+            $imagePath = request('image')->store('profile', 'public');
+
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000, 1000);
+            $image->save();
+        }
+
+        // 4. Guardem els canvis al perfil de la BBDD, substituïnt la imatge de $data
+        auth()->user()->profile->update(array_merge(
+            $data,
+            ['image' => $imagePath]
+        ));
+
 
         return redirect("/profile/{$user->id}");
     }
