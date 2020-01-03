@@ -23,7 +23,15 @@ class Profile extends Model
 
 
     /**
-     * Relationship per a l'usuari
+     * Relationship n-n amb Usuari
+     */
+    public function followers()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Relationship 1-1 amb Usuari
      */
     public function user()
     {

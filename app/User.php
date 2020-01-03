@@ -55,7 +55,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Relació amb Post
+     * Relació 1-n amb Post
      */
     public function posts()
     {
@@ -63,7 +63,15 @@ class User extends Authenticatable
     }
 
     /**
-     * Relació amb Profile
+     * Relació n-n amb Profile
+     */
+    public function following()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
+
+    /**
+     * Relació 1-1 amb Profile
      */
     public function profile()
     {
