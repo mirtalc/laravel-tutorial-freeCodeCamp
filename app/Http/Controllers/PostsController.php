@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -10,6 +11,18 @@ class PostsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        $users = auth()->user()->following->pluck('user_id');
+        // ell fa: $users = auth()->user()->following()->pluck('profiles.user_id');
+        // és a dir, amb el following() de la relació
+
+        $posts = Post::whereIn('user_id', $users)->orderBy('created_at', 'DESC')->get();
+        // ->orderby('created_at', 'DESC')->    és equivalent a     ->latest()->
+
+        return view('posts/index', compact('posts'));
     }
 
     public function create()

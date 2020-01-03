@@ -11,16 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 // ------ FollowsController ------
 Route::post('follow/{user}', 'FollowsController@store');
 
 // ------ PostsController ------
+Route::get('/', 'PostsController@index');
 Route::get('/p/create', 'PostsController@create');
 Route::get('/p/{post}', 'PostsController@show'); //Ojo, baix, sinò coincidiria i ignoraria la de create
 
