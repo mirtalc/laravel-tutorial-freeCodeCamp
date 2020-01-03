@@ -19,7 +19,7 @@ class PostsController extends Controller
         // ell fa: $users = auth()->user()->following()->pluck('profiles.user_id');
         // és a dir, amb el following() de la relació
 
-        $posts = Post::whereIn('user_id', $users)->orderBy('created_at', 'DESC')->get();
+        $posts = Post::whereIn('user_id', $users)->orderBy('created_at', 'DESC')->paginate(5);
         // ->orderby('created_at', 'DESC')->    és equivalent a     ->latest()->
 
         return view('posts/index', compact('posts'));

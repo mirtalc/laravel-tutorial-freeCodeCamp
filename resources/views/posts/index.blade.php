@@ -23,5 +23,12 @@
 
     </div>
     @endforeach
+
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <!-- funciona perquè al controller té paginate(n) -->
+            {{ $posts->links() }}
+        </div>
+    </div>
 </div>
 @endsection
