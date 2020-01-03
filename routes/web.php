@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// ------ FollowsController ------
+Route::post('follow/{user}', 'FollowsController@store');
+
 // ------ PostsController ------
 Route::get('/p/create', 'PostsController@create');
 Route::get('/p/{post}', 'PostsController@show'); //Ojo, baix, sinò coincidiria i ignoraria la de create
