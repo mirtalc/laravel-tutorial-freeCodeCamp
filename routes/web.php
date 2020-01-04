@@ -11,7 +11,14 @@
 |
 */
 
+use App\Mail\NewUserWelcomeMail;
+
 Auth::routes();
+
+// ------ Prova per a vore el mail ------
+Route::get('/email', function () {
+    return new NewUserWelcomeMail();
+});
 
 // ------ FollowsController ------
 Route::post('follow/{user}', 'FollowsController@store');
